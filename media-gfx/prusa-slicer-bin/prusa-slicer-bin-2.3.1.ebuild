@@ -7,7 +7,7 @@ inherit desktop eutils
 
 DESCRIPTION="PrusaSlicer takes 3D models (STL, OBJ, AMF) and converts them into G-code."
 HOMEPAGE="https://github.com/prusa3d/PrusaSlicer"
-SRC_URI="https://github.com/prusa3d/PrusaSlicer/releases/download/version_2.3.0-beta1/PrusaSlicer-2.3.0-beta1+linux-x64-202011281040.tar.bz2 -> ${P}.tar.bz2"
+SRC_URI="https://github.com/prusa3d/PrusaSlicer/releases/download/version_2.3.0/PrusaSlicer-2.3.0+linux-x64-202101111322.tar.bz2 -> ${P}.tar.bz2"
 
 LICENSE="AGPL-3 CC-BY-3.0"
 SLOT="0"
