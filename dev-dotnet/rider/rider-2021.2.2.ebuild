@@ -30,8 +30,8 @@ src_prepare() {
 
 	local remove_me=()
 
-	use amd64 || remove_me+=( bin/fsnotifier64 lib/pty4j-native/linux/x86_64)
-	use x86 || remove_me+=( bin/fsnotifier lib/pty4j-native/linux/x86)
+	use amd64 || remove_me+=( lib/pty4j-native/linux/x86_64)
+	use x86 || remove_me+=( lib/pty4j-native/linux/x86)
 
 	rm -rv "${remove_me[@]}" || die
 }
@@ -44,11 +44,7 @@ src_install() {
 	fperms 755 "${dir}"/bin/${PN}.sh
 
 	if use amd64; then
-		fperms 755 "${dir}"/bin/fsnotifier64
 		fperms 755 "${dir}"/lib/ReSharperHost/linux-x64/dotnet/dotnet
-	fi
-	if use x86; then
-		fperms 755 "${dir}"/bin/fsnotifier
 	fi
 
 	fperms 755 "${dir}"/jbr/bin/{jaotc,java,javac,jdb,jjs,jrunscript,keytool,pack200,rmid,rmiregistry,serialver,unpack200}
