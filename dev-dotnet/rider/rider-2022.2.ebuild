@@ -1,6 +1,6 @@
-# Copyright 1999-2020 Blake LaFleur <blake.k.lafleur@gmail.com>
-# Ebuild script heavily based on the work of bombo82
-# Distributed under the terms of the GNU General Public License v2
+# Copyright 2022 Blake LaFleur <blake.k.lafleur@gmail.com>
+# Distributed under the terms of the GNU General Public License as published by the Free Software Foundation;
+# either version 2 of the License, or (at your option) any later version.
 
 EAPI=7
 
@@ -14,7 +14,7 @@ LICENSE="|| ( jetbrains_business-3.1 jetbrains_individual-4.1 jetbrains_educatio
 	Apache-1.1 Apache-2.0 BSD BSD-2 CC0-1.0 CDDL CPL-1.0 GPL-2-with-classpath-exception GPL-3 ISC LGPL-2.1 LGPL-3 MIT MPL-1.1 OFL PSF-2 trilead-ssh UoI-NCSA yFiles yourkit
 "
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS="~amd64"
 IUSE=""
 
 DEPEND=""
@@ -25,13 +25,14 @@ S="${WORKDIR}/JetBrains Rider-${PV}"
 
 QA_PREBUILT="opt/${P}/*"
 
+PTY4J_NATIVE_DIR="lib/pty4j-native/linux"
+RESHARPER_DIR="lib/ReSharperHost"
+
 src_prepare() {
 	default
 
-	local remove_me=()
-
-	use amd64 || remove_me+=( lib/pty4j-native/linux/x86_64)
-	use x86 || remove_me+=( lib/pty4j-native/linux/x86)
+	local remove_me=( "${PTY4J_NATIVE_DIR}"/ppc* "${PTY4J_NATIVE_DIR}"/mips* "${PTY4J_NATIVE_DIR}"/arm* "${PTY4J_NATIVE_DIR}"/aarch* )
+	remove_me+=( "${RESHARPER_DIR}"/windows* "${RESHARPER_DIR}"/linux-arm* "${RESHARPER_DIR}"/linux-musl* "${RESHARPER_DIR}"/linux-x86 "${RESHARPER_DIR}"/macos* )
 
 	rm -rv "${remove_me[@]}" || die
 }
@@ -41,17 +42,15 @@ src_install() {
 
 	insinto "${dir}"
 	doins -r *
-	fperms 755 "${dir}"/bin/${PN}.sh
 
-	if use amd64; then
-		fperms 755 "${dir}"/bin/fsnotifier
-		fperms 755 "${dir}"/lib/ReSharperHost/linux-x64/dotnet/dotnet
-	fi
-	if use x86; then
-		fperms 755 "${dir}"/bin/fsnotifier
-	fi
+	fperms 755 "${dir}"/bin/fsnotifier
+	fperms 755 "${dir}"/bin/{rider,format,inspect,ltedit,remote-dev-server}.sh
 
-	fperms 755 "${dir}"/jbr/bin/{jaotc,java,javac,jdb,jjs,jrunscript,keytool,pack200,rmid,rmiregistry,serialver,unpack200}
+	fperms 755 "${dir}"/"${RESHARPER_DIR}"/linux-x64/Rider.Backend
+	fperms 755 "${dir}"/"${RESHARPER_DIR}"/linux-x64/dotnet/dotnet
+
+	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
+	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
 
 	make_wrapper "${PN}" "${dir}/bin/${PN}.sh"
 	newicon "bin/${PN}.svg" "${PN}.svg"

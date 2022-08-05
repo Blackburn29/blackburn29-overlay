@@ -1,18 +1,22 @@
-# Copyright 2020 Blake LaFleur <blake.k.lafleur@gmail.com>
-# Distributed under the terms of the GNU General Public License v2
+# Copyright 2022 Blake LaFleur <blake.k.lafleur@gmail.com>
+# Distributed under the terms of the GNU General Public License as published by the Free Software Foundation;
+# either version 2 of the License, or (at your option) any later version.
 
 EAPI=7
 
 inherit desktop eutils
 
+SRC_TIMESTAMP="202204251120"
+
 DESCRIPTION="PrusaSlicer takes 3D models (STL, OBJ, AMF) and converts them into G-code."
 HOMEPAGE="https://github.com/prusa3d/PrusaSlicer"
-SRC_URI="https://github.com/prusa3d/PrusaSlicer/releases/download/version_2.4.0/PrusaSlicer-2.4.0+linux-x64-202112211614.tar.bz2 -> ${P}.tar.bz2"
 
 LICENSE="AGPL-3 CC-BY-3.0"
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="gtk"
+
+SRC_URI="https://github.com/prusa3d/PrusaSlicer/releases/download/version_${PVR}/PrusaSlicer-${PVR}+linux-x64-GTK3-${SRC_TIMESTAMP}.tar.bz2 -> ${P}.tar.bz2"
 
 DEPEND=""
 RDEPEND="${DEPEND}"
@@ -22,7 +26,6 @@ S="${WORKDIR}"
 QA_PREBUILT="opt/${P}/*"
 
 src_unpack() {
-	#tar -xf "${P}.tar.bz2" --strip-components=1
 	unpack ${A}
 	mv Prusa*/* . && rm -rf PrusaSlicer*/
 }
