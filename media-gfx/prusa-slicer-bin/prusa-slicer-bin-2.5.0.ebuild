@@ -6,7 +6,7 @@ EAPI=7
 
 inherit desktop eutils
 
-SRC_TIMESTAMP="202204251120"
+SRC_TIMESTAMP="202209060725"
 
 DESCRIPTION="PrusaSlicer takes 3D models (STL, OBJ, AMF) and converts them into G-code."
 HOMEPAGE="https://github.com/prusa3d/PrusaSlicer"

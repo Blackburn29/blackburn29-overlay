@@ -57,7 +57,7 @@ src_install() {
 	doins -r *
 
 	if use gui ; then
-		chmod 755 "${D}"/usr/bin/kyodialog9.1
+		chmod 755 "${D}""/usr/bin/kyodialog${PV}"
 	fi
 
 	chmod 755 "${D}"/usr/bin/kyoPPDWrite_H
