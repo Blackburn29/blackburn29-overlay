@@ -4,7 +4,7 @@
 
 EAPI=8
 
-inherit desktop eutils
+inherit desktop wrapper
 
 DESCRIPTION="The Universal Driver package and toolset for printing on Kyocera-based printers"
 HOMEPAGE="hyoceradocumentsolutions.co.uk"

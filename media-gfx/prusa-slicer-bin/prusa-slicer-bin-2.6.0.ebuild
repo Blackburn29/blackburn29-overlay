@@ -4,7 +4,7 @@
 
 EAPI=8
 
-inherit desktop eutils
+inherit desktop wrapper
 
 SRC_TIMESTAMP="202306191220"
 

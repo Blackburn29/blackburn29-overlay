@@ -4,7 +4,7 @@
 
 EAPI=8
 
-inherit desktop eutils
+inherit desktop wrapper
 
 DESCRIPTION="A cross-platform .NET IDE based on the IntelliJ platform and ReSharper."
 HOMEPAGE="https://www.jetbrains.com/rider/"
