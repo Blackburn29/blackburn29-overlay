@@ -1,4 +1,4 @@
-name: Create our Weekly Meeting notes issue
+name: Check for Rider updates
 on:
   schedule:
     - cron: '0 0 * * 0'
