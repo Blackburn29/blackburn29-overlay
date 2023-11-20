@@ -1,0 +1,24 @@
+name: Create our Weekly Meeting notes issue
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+jobs:
+  check_version:
+    name: Check for latest version of Rider
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Check for latest version against API
+        run: |
+          echo "UPDATE_OUTPUT=$(bash ${GITHUB_WORKSPACE}/scripts/update_check.sh RD ./dev-dotnet/rider)" >> $GITHUB_ENV
+  issue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EBUILD_NAME: dev-dotnet/rider
+        with:
+          filename: .github/ISSUE_TEMPLATE/version_update.md
+          update_existing: true
