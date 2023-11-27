@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Check for latest version against API
         run: |
-          echo "UPDATE_OUTPUT=$(bash ${GITHUB_WORKSPACE}/scripts/update_check.sh RD ./dev-dotnet/rider)" >> $GITHUB_ENV
+          echo "UPDATE_OUTPUT=$(bash ${GITHUB_WORKSPACE}/.github/scripts/update_check.sh RD ./dev-dotnet/rider)" >> $GITHUB_ENV
   issue:
     runs-on: ubuntu-latest
     steps:
