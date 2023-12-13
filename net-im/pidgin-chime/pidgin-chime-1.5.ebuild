@@ -7,7 +7,7 @@ inherit autotools
 
 DESCRIPTION="Pidgen plugin for Amazon Chime"
 HOMEPAGE="https://github.com/awslabs/pidgin-chime"
-SRC_URI="https://github.com/awslabs/pidgin-chime/archive/v${PVR}.tar.gz} -> ${P}.tar.gz"
+SRC_URI="https://github.com/awslabs/pidgin-chime/archive/refs/tags/v${PVR}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"

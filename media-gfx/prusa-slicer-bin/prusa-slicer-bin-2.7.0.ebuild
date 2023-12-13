@@ -1,4 +1,4 @@
-# Copyright 2022 Blake LaFleur <blake.k.lafleur@gmail.com>
+# Copyright 2023 Blake LaFleur <blake.k.lafleur@gmail.com>
 # Distributed under the terms of the GNU General Public License as published by the Free Software Foundation;
 # either version 2 of the License, or (at your option) any later version.
 
@@ -6,7 +6,7 @@ EAPI=8
 
 inherit desktop wrapper
 
-SRC_TIMESTAMP="202306191220"
+SRC_TIMESTAMP="202311231454"
 
 DESCRIPTION="PrusaSlicer takes 3D models (STL, OBJ, AMF) and converts them into G-code."
 HOMEPAGE="https://github.com/prusa3d/PrusaSlicer"
@@ -19,7 +19,10 @@ IUSE="gtk"
 SRC_URI="https://github.com/prusa3d/PrusaSlicer/releases/download/version_${PVR}/PrusaSlicer-${PVR}+linux-x64-GTK3-${SRC_TIMESTAMP}.tar.bz2 -> ${P}.tar.bz2"
 
 DEPEND=""
-RDEPEND="${DEPEND}"
+RDEPEND="
+	${DEPEND}
+	media-libs/glu
+"
 BDEPEND=""
 
 S="${WORKDIR}"
