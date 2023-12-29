@@ -2,6 +2,8 @@ name: Check for Rider updates
 on:
   schedule:
     - cron: '0 0 * * *'
+  workflow_dispatch:
+
 jobs:
   check_jb_ides:
     name: Check for latest versions of IntelliJ IDEs
@@ -13,7 +15,7 @@ jobs:
           echo "UPDATE_OUTPUT=$(bash ${GITHUB_WORKSPACE}/.github/scripts/check_all_jb_ides.sh)" >> $GITHUB_ENV
   create_issue:
     runs-on: ubuntu-latest
-    if: env.UPDATE_OUTPUT != ''
+    if: ${{env.UPDATE_OUTPUT != ''}}
     steps:
       - uses: actions/checkout@v1
       - uses: JasonEtco/create-an-issue@v2
