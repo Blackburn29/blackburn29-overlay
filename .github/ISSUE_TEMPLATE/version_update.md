@@ -1,3 +1,7 @@
 ---
-title: Update {{ env.EBUILD_NAME }} to {{ env.UPDATE_OUTPUT }}
+title: Update available for one or more JetBrains IDEs
+body:
+    - type: markdown
+    attributes:
+        value: {{env.UPDATE_OUTPUT}}
 ---

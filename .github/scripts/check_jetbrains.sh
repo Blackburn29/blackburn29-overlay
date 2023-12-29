@@ -5,6 +5,9 @@
 # IDEA: IIU
 # Rider: RD
 # Datagrip: DG
+# CLion: CL
+# RustRover: RR
+# WebStorm: WS
 
 
 CURRENT_TIMESTAMP=$(date +%s%N | cut -b1-13)

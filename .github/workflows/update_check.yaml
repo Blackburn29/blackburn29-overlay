@@ -3,42 +3,21 @@ on:
   schedule:
     - cron: '0 0 * * 0'
 jobs:
-  check_rider:
+  check_jb_ides:
     name: Check for latest version of Rider
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Check for latest version against API
         run: |
-          echo "UPDATE_OUTPUT=$(bash ${GITHUB_WORKSPACE}/.github/scripts/update_check.sh RD ./dev-dotnet/rider)" >> $GITHUB_ENV
-  issue_rider:
+          echo "UPDATE_OUTPUT=$(bash ${GITHUB_WORKSPACE}/.github/scripts/check_all_jb_ides.sh)" >> $GITHUB_ENV
+  create_issue:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - uses: JasonEtco/create-an-issue@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EBUILD_NAME: dev-dotnet/rider
-        with:
-          filename: .github/ISSUE_TEMPLATE/version_update.md
-          update_existing: true
-
-  check_idea:
-    name: Check for latest version of Rider
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Check for latest version against API
-        run: |
-          echo "UPDATE_OUTPUT=$(bash ${GITHUB_WORKSPACE}/.github/scripts/update_check.sh IIU ./dev-dotnet/rider)" >> $GITHUB_ENV
-  issue_idea:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          EBUILD_NAME: dev-util/idea-ultimate
         with:
           filename: .github/ISSUE_TEMPLATE/version_update.md
           update_existing: true
