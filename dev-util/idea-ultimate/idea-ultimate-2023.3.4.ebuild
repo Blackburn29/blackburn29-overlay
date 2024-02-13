@@ -20,7 +20,7 @@ IUSE=""
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
-	dev-util/lldb
+	dev-debug/lldb
 	media-libs/mesa[X(+)]
 	x11-libs/libX11
 	x11-libs/libXcomposite
@@ -38,7 +38,7 @@ SRC_URI_PATH="idea"
 SRC_URI_PN="ideaIU"
 SRC_URI="https://download.jetbrains.com/${SRC_URI_PATH}/${SRC_URI_PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
-BUILD_NUMBER="233.13135.103"
+BUILD_NUMBER="233.14475.28"
 S="${WORKDIR}/idea-IU-${BUILD_NUMBER}"
 
 src_install() {
