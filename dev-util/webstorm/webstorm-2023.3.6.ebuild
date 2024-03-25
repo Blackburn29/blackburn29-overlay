@@ -20,7 +20,7 @@ IUSE=""
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
-	dev-util/lldb
+	dev-debug/lldb
 	media-libs/mesa[X(+)]
 	x11-libs/libX11
 	x11-libs/libXcomposite
@@ -38,7 +38,7 @@ SRC_URI_PATH="webstorm"
 SRC_URI_PN="WebStorm"
 SRC_URI="https://download-cdn.jetbrains.com/${SRC_URI_PATH}/${SRC_URI_PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
-BUILD_NUMBER="233.14808.24"
+BUILD_NUMBER="233.15026.13"
 S="${WORKDIR}/WebStorm-${BUILD_NUMBER}"
 
 src_install() {
