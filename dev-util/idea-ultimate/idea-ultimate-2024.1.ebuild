@@ -44,7 +44,7 @@ S="${WORKDIR}/idea-IU-${BUILD_NUMBER}"
 src_prepare() {
 	default
 
-	local remove_me=( "./lib/async-profiler/aarch64" "./plugins/cwm-plugin/quiche-native/linux-aarch64" )
+	local remove_me=( "./lib/async-profiler/aarch64" )
 
 	rm -rv "${remove_me[@]}" || die
 }
