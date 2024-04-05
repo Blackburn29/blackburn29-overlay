@@ -6,8 +6,8 @@ EAPI=8
 
 inherit desktop wrapper
 
-DESCRIPTION="A cross-platform IDE for Enterprise, Web and Mobile development"
-HOMEPAGE="https://www.jetbrains.com/idea/"
+DESCRIPTION="An integrated development environment for JavaScript and related technologies."
+HOMEPAGE="https://www.jetbrains.com/webstorm/"
 LICENSE="
 	|| ( jetbrains_business-4.0 jetbrains_individual-4.2 jetbrains_educational-4.0 jetbrains_classroom-4.2 jetbrains_opensource-4.2 )
 	Apache-1.1 Apache-2.0 BSD BSD-2 CC0-1.0 CC-BY-2.5 CDDL CDDL-1.1 codehaus CPL-1.0 GPL-2 GPL-2-with-classpath-exception GPL-3 ISC LGPL-2.1 LGPL-3 MIT MPL-1.1 MPL-2.0 OFL trilead-ssh yFiles yourkit W3C ZLIB
@@ -32,22 +32,14 @@ RDEPEND="
 	x11-libs/libXrandr
 "
 
-SIMPLE_NAME="Idea Ultimate"
-MY_PN="idea"
-SRC_URI_PATH="idea"
-SRC_URI_PN="ideaIU"
-SRC_URI="https://download.jetbrains.com/${SRC_URI_PATH}/${SRC_URI_PN}-${PV}.tar.gz -> ${P}.tar.gz"
+SIMPLE_NAME="WebStorm"
+MY_PN="webstorm"
+SRC_URI_PATH="webstorm"
+SRC_URI_PN="WebStorm"
+SRC_URI="https://download-cdn.jetbrains.com/${SRC_URI_PATH}/${SRC_URI_PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
-BUILD_NUMBER="233.14808.21"
-S="${WORKDIR}/idea-IU-${BUILD_NUMBER}"
-
-src_prepare() {
-	default
-
-	local remove_me=( "./lib/async-profiler/aarch64" "./plugins/cwm-plugin/quiche-native/linux-aarch64" )
-
-	rm -rv "${remove_me[@]}" || die
-}
+BUILD_NUMBER="241.14494.235"
+S="${WORKDIR}/WebStorm-${BUILD_NUMBER}"
 
 src_install() {
 	local dir="/opt/${P}"
