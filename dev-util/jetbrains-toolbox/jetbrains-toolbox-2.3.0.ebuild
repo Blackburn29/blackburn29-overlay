@@ -23,7 +23,7 @@ IUSE="
 "
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
-	sys-fs/fuse
+	sys-fs/fuse:0
 	media-libs/mesa
 	x11-libs/libXi
 	x11-libs/libXrender
@@ -34,14 +34,6 @@ RDEPEND="
 SRC_BUILD="30876"
 SRC_URI="https://download.jetbrains.com/toolbox/${PN}-${PV}.${SRC_BUILD}.tar.gz -> ${P}.tar.gz"
 S="${WORKDIR}"/"${P}"."${SRC_BUILD}"
-
-pkg_setup() {
-	CONFIG_CHECK+="
-		~FUSE_FS
-	"
-
-	linux-info_pkg_setup
-}
 
 
 src_install() {
