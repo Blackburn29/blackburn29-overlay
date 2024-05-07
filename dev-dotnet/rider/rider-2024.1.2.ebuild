@@ -1,4 +1,4 @@
-# Copyright 2024 Blake LaFleur <blake.k.lafleur@gmail.com>
+# Copyright 2022 Blake LaFleur <blake.k.lafleur@gmail.com>
 # Distributed under the terms of the GNU General Public License as published by the Free Software Foundation;
 # either version 2 of the License, or (at your option) any later version.
 
@@ -14,7 +14,6 @@ LICENSE="|| ( jetbrains_business-3.1 jetbrains_individual-4.1 jetbrains_educatio
 	Apache-1.1 Apache-2.0 BSD BSD-2 CC0-1.0 CDDL CPL-1.0 GPL-2-with-classpath-exception GPL-3 ISC LGPL-2.1 LGPL-3 MIT MPL-1.1 OFL PSF-2 trilead-ssh UoI-NCSA yFiles yourkit
 "
 SLOT="0"
-VER="$(ver_cut 1-2)"
 KEYWORDS="~amd64"
 IUSE=""
 
@@ -35,7 +34,6 @@ src_prepare() {
 
 	rm -rv "${remove_me[@]}" || die
 }
-
 
 src_install() {
 	local dir="/opt/${P}"
