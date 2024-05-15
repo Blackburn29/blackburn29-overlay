@@ -41,6 +41,14 @@ SRC_URI="https://download.jetbrains.com/${SRC_URI_PATH}/${SRC_URI_PN}-${PV}.tar.
 
 S="${WORKDIR}/DataGrip-${PV}"
 
+src_prepare() {
+	default
+
+	local remove_me=( "lib/async-profiler/aarch64/" )
+
+	rm -rv "${remove_me[@]}" || die
+}
+
 src_install() {
 	local dir="/opt/${P}"
 
