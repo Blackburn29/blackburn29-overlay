@@ -21,7 +21,7 @@ IUSE=""
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
-	dev-util/lldb
+	dev-debug/lldb
 	media-libs/mesa[X(+)]
 	x11-libs/libX11
 	x11-libs/libXcomposite
@@ -33,7 +33,7 @@ RDEPEND="
 	x11-libs/libXrandr
 "
 
-SIMPLE_NAME="RustRover EAP"
+SIMPLE_NAME="RustRover"
 MY_PN="${PN}"
 SRC_URI_PATH="${PN}"
 SRC_URI_PN="${PN}"
