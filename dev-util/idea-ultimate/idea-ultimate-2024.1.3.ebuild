@@ -6,15 +6,13 @@ EAPI=8
 
 inherit desktop wrapper
 
-DESCRIPTION="A cross-platform IDE for Databases and SQL by JetBrains"
-HOMEPAGE="https://www.jetbrains.com/datagrip/"
-
+DESCRIPTION="A cross-platform IDE for Enterprise, Web and Mobile development"
+HOMEPAGE="https://www.jetbrains.com/idea/"
 LICENSE="
 	|| ( jetbrains_business-4.0 jetbrains_individual-4.2 jetbrains_educational-4.0 jetbrains_classroom-4.2 jetbrains_opensource-4.2 )
-	Apache-1.1 Apache-2.0 BSD BSD-2 CC0-1.0 CDDL CPL-1.0 GPL-2-with-classpath-exception GPL-3 ISC LGPL-2.1 LGPL-3 MIT MPL-1.1 OFL PSF-2 trilead-ssh UoI-NCSA yFiles yourkit
+	Apache-1.1 Apache-2.0 BSD BSD-2 CC0-1.0 CC-BY-2.5 CDDL CDDL-1.1 codehaus CPL-1.0 GPL-2 GPL-2-with-classpath-exception GPL-3 ISC LGPL-2.1 LGPL-3 MIT MPL-1.1 MPL-2.0 OFL trilead-ssh yFiles yourkit W3C ZLIB
 "
 SLOT="0"
-VER="$(ver_cut 1-2)"
 KEYWORDS="~amd64"
 RESTRICT="bindist mirror splitdebug"
 IUSE=""
@@ -33,18 +31,22 @@ RDEPEND="
 	x11-libs/libXrandr
 "
 
-SIMPLE_NAME="DataGrip"
-MY_PN="${PN}"
-SRC_URI_PATH="${PN}"
-SRC_URI_PN="${PN}"
+MY_PN="idea"
+SRC_URI_PATH="idea"
+SRC_URI_PN="ideaIU"
 SRC_URI="https://download.jetbrains.com/${SRC_URI_PATH}/${SRC_URI_PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
-S="${WORKDIR}/DataGrip-${PV}"
+src_unpack() {
+	cp "${DISTDIR}"/${P}.tar.gz "${WORKDIR}" || die
+	mkdir -p "${P}"
+	tar xf "${P}".tar.gz --strip-components=1 -C ./"${P}"
+	rm -rf "${P}".tar.gz
+}
 
 src_prepare() {
 	default
 
-	local remove_me=( "lib/async-profiler/aarch64/" )
+	local remove_me=( "./lib/async-profiler/aarch64" )
 
 	rm -rv "${remove_me[@]}" || die
 }
@@ -62,7 +64,7 @@ src_install() {
 
 	make_wrapper "${PN}" "${dir}"/bin/"${MY_PN}".sh
 	newicon bin/"${MY_PN}".svg "${PN}".svg
-	make_desktop_entry "${PN}" "${SIMPLE_NAME} ${VER}" "${PN}" "Development;IDE;"
+	make_desktop_entry "${PN}" "${SRC_URI_PN} ${PVR}" "${PN}" "Development;IDE;"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 	dodir /usr/lib/sysctl.d/
