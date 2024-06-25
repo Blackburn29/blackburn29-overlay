@@ -1,4 +1,4 @@
-# Copyright 2022 Blake LaFleur <blake.k.lafleur@gmail.com>
+# Copyright 2024 Blake LaFleur <blake.k.lafleur@gmail.com>
 # Distributed under the terms of the GNU General Public License as published by the Free Software Foundation;
 # either version 2 of the License, or (at your option) any later version.
 
@@ -15,7 +15,7 @@ LICENSE="|| ( jetbrains_business-3.1 jetbrains_individual-4.1 jetbrains_educatio
 "
 SLOT="0"
 KEYWORDS="~amd64"
-IUSE=""
+IUSE="wayland"
 
 DEPEND=""
 RDEPEND="${DEPEND}"
@@ -30,9 +30,17 @@ RESHARPER_DIR="lib/ReSharperHost"
 src_prepare() {
 	default
 
-	local remove_me=( "${RESHARPER_DIR}"/windows* "${RESHARPER_DIR}"/linux-arm* "${RESHARPER_DIR}"/macos* )
+	local remove_me=( "${RESHARPER_DIR}"/windows* "${RESHARPER_DIR}"/linux*-arm* "${RESHARPER_DIR}"/macos* )
 
 	rm -rv "${remove_me[@]}" || die
+
+	if use wayland; then
+		echo "-Dawt.toolkit.name=WLToolkit" >> bin/rider64.vmoptions
+
+		elog "Experimental wayland support has been enabled via USE flags"
+		elog "You may need to update your JBR runtime to the latest version"
+		elog "https://github.com/JetBrains/JetBrainsRuntime/releases"
+	fi
 }
 
 src_install() {
