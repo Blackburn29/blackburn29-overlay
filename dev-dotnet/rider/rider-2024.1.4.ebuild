@@ -16,21 +16,38 @@ LICENSE="|| ( jetbrains_business-3.1 jetbrains_individual-4.1 jetbrains_educatio
 SLOT="0"
 KEYWORDS="~amd64"
 IUSE="wayland"
-
-DEPEND=""
-RDEPEND="${DEPEND}"
-BDEPEND=""
+RDEPEND="
+	dev-libs/libdbusmenu
+	dev-debug/lldb
+	media-libs/mesa[X(+)]
+	x11-libs/libX11
+	x11-libs/libXcomposite
+	x11-libs/libXcursor
+	x11-libs/libXdamage
+	x11-libs/libXext
+	x11-libs/libXfixes
+	x11-libs/libXi
+	x11-libs/libXrandr
+"
 
 S="${WORKDIR}/JetBrains Rider-${PV}"
 
 QA_PREBUILT="opt/${P}/*"
 
 RESHARPER_DIR="lib/ReSharperHost"
+PLUGIN_DIR="plugins"
 
 src_prepare() {
 	default
 
-	local remove_me=( "${RESHARPER_DIR}"/windows* "${RESHARPER_DIR}"/linux*-arm* "${RESHARPER_DIR}"/macos* )
+	local remove_me=(
+		lib/async-profiler/aarch64 \
+		"${RESHARPER_DIR}"/windows* \
+		"${RESHARPER_DIR}"/linux*-arm* \
+		"${RESHARPER_DIR}"/macos* \
+		"${PLUGIN_DIR}"/cidr-debugger-plugin/bin/lldb/linux/aarch64 \
+		"${PLUGIN_DIR}"/dotTrace.dotMemory/DotFiles/linux-arm64
+	)
 
 	rm -rv "${remove_me[@]}" || die
 
