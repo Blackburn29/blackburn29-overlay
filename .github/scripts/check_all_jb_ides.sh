@@ -12,8 +12,9 @@ declare -A ides=( \
 
 for ide in "${!ides[@]}"; do
     AVAILABLE_UPDATE=$(bash -c "$SCRIPTS_DIR/check_jetbrains.sh $ide ${ides[$ide]}")
+    ECODE=$?
 
-    if [ -n "$AVAILABLE_UPDATE" ];
+    if [ $ECODE -ne 0 ];
     then
         echo "Update available for ${ides[$ide]}: $AVAILABLE_UPDATE"
     fi

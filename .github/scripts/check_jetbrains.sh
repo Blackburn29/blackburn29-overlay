@@ -8,6 +8,14 @@
 # CLion: CL
 # RustRover: RR
 # WebStorm: WS
+declare -A ides=( \
+    ["IIU"]="Idea Ultimate" \
+    ["DG"]="Datagrip" \
+    ["WS"]="Webstorm" \
+    ["RR"]="RustRover" \
+    ["RD"]="Rider" \
+    ["CL"]="CLion" \
+)
 
 
 CURRENT_TIMESTAMP=$(date +%s%N | cut -b1-13)
@@ -20,6 +28,8 @@ CURRENT_EBUILD=$(find $2 -name '*.ebuild' | sort -Vr | head -n1 | perl -n -e'/([
 
 #echo "Current ebuild version: $CURRENT_EBUILD"
 #echo "Latest JetBrains version: $LATEST_VERSION"
+
+echo "${ides[$1]}: $LATEST_VERSION" > /dev/stderr
 
 if [ "$LATEST_VERSION" != "$CURRENT_EBUILD" ]; then
     echo "$LATEST_VERSION"
