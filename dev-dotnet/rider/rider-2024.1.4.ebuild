@@ -40,16 +40,20 @@ PLUGIN_DIR="plugins"
 src_prepare() {
 	default
 
-	local remove_me=(
-		lib/async-profiler/aarch64 \
-		"${RESHARPER_DIR}"/windows* \
-		"${RESHARPER_DIR}"/linux*-arm* \
-		"${RESHARPER_DIR}"/macos* \
-		"${PLUGIN_DIR}"/cidr-debugger-plugin/bin/lldb/linux/aarch64 \
-		"${PLUGIN_DIR}"/dotTrace.dotMemory/DotFiles/linux-arm64
+	declare -a remove_arches=(\
+		arm64 \
+		aarch64 \
+		macos \
+		windows- \
+		win- \
 	)
 
-	rm -rv "${remove_me[@]}" || die
+	# Remove all unsupported ARCH
+	for arch in "${remove_arches[@]}"
+	do
+		echo "Removing files for $arch"
+		find . -name "*$arch*" -exec rm -rf {} \; || true
+	done
 
 	if use wayland; then
 		echo "-Dawt.toolkit.name=WLToolkit" >> bin/rider64.vmoptions
@@ -66,14 +70,19 @@ src_install() {
 	insinto "${dir}"
 	doins -r *
 
-	fperms 755 "${dir}"/bin/fsnotifier
-	fperms 755 "${dir}"/bin/{rider,format,inspect,ltedit,remote-dev-server}.sh
+	fperms 755 "${dir}"/bin/{repair,fsnotifier}
+	fperms 755 "${dir}"/bin/{remote-dev-server,inspect,rider,format,ltedit,jetbrains_client}.sh
 
 	fperms 755 "${dir}"/"${RESHARPER_DIR}"/linux-x64/{Rider.Backend,JetBrains.Debugger.Worker,JetBrains.ProcessEnumerator.Worker,clang-format,jb_zip_unarchiver}
 	fperms 755 "${dir}"/"${RESHARPER_DIR}"/linux-x64/dotnet/dotnet
 
+	fperms 755 "${dir}"/"${PLUGIN_DIR}"/cidr-debugger-plugin/bin/lldb/linux/x64/bin/{lldb,lldb-server,lldb-argdumper,LLDBFrontend}
+	fperms 755 "${dir}"/"${PLUGIN_DIR}"/dotCommon/DotFiles/linux-x64/JetBrains.Profiler.PdbServer
+	fperms 755 "${dir}"/"${PLUGIN_DIR}"/remote-dev-server/selfcontained/bin/{xkbcomp,Xvfb}
+	fperms 755 "${dir}"/"${PLUGIN_DIR}"/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-linux-amd64
+
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
-	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
+	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,cef_server,jcef_helper,jexec,jspawnhelper}
 
 	make_wrapper "${PN}" "${dir}/bin/${PN}.sh"
 	newicon "bin/${PN}.svg" "${PN}.svg"
