@@ -21,6 +21,7 @@ IUSE="wayland"
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
+	dev-libs/glib
 	dev-debug/lldb
 	media-libs/mesa[X(+)]
 	x11-libs/libX11
@@ -44,6 +45,21 @@ S="${WORKDIR}/RustRover-${PV}"
 src_prepare() {
 	default
 
+	declare -a remove_arches=(\
+		arm64 \
+		aarch64 \
+		macos \
+		windows- \
+		win- \
+	)
+
+	# Remove all unsupported ARCH
+	for arch in "${remove_arches[@]}"
+	do
+		echo "Removing files for $arch"
+		find . -name "*$arch*" -exec rm -rf {} \; || true
+	done
+
 	if use wayland; then
 		echo "-Dawt.toolkit.name=WLToolkit" >> bin/rider64.vmoptions
 
@@ -58,11 +74,17 @@ src_install() {
 
 	insinto "${dir}"
 	doins -r *
-	fperms 755 "${dir}"/bin/{"${MY_PN}",format,inspect,ltedit,remote-dev-server}.sh
-	fperms 755 "${dir}"/bin/fsnotifier
+	fperms 755 "${dir}"/bin/{"${MY_PN}",remote-dev-server,jetbrains_client,ltedit,inspect,format}.sh
+	fperms 755 "${dir}"/bin/lldb/linux/x64/lib/xml2Conf.sh
+	fperms 755 "${dir}"/bin/{fsnotifier,repair}
+	fperms 755 "${dir}"/bin/lldb/linux/x64/bin/{LLDBFrontend,lldb-argdumper,lldb-server,lldb}
+
+	fperms 755 "${dir}"/plugins/intellij-rust/bin/linux/x86-64/intellij-rust-native-helper
+	fperms 755 "${dir}"/plugins/remote-dev-server/selfcontained/bin/{xkbcomp,Xvfb}
+	fperms 755 "${dir}"/plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-linux-amd64
 
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
-	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
+	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper,cef_server}
 
 
 	make_wrapper "${PN}" "${dir}"/bin/"${MY_PN}".sh
