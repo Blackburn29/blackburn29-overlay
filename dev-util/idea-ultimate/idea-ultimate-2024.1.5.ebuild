@@ -15,7 +15,7 @@ LICENSE="
 SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="bindist mirror splitdebug"
-IUSE=""
+IUSE="wayland"
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
