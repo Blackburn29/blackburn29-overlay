@@ -1,4 +1,4 @@
-# Copyright 2023 Blake LaFleur <blake.k.lafleur@gmail.com>
+# Copyright 2024 Blake LaFleur <blake.k.lafleur@gmail.com>
 # Distributed under the terms of the GNU General Public License as published by the Free Software Foundation;
 # either version 2 of the License, or (at your option) any later version.
 
@@ -31,6 +31,7 @@ RDEPEND="
 	x11-libs/libXrandr
 "
 
+FRIENDLY_NAME="IDEA Ultimate"
 MY_PN="idea"
 SRC_URI_PATH="idea"
 SRC_URI_PN="ideaIU"
@@ -46,9 +47,28 @@ src_unpack() {
 src_prepare() {
 	default
 
-	local remove_me=( "./lib/async-profiler/aarch64" )
+	declare -a remove_arches=(\
+		arm64 \
+		aarch64 \
+		macos \
+		windows- \
+		win- \
+	)
 
-	rm -rv "${remove_me[@]}" || die
+	# Remove all unsupported ARCH
+	for arch in "${remove_arches[@]}"
+	do
+		echo "Removing files for $arch"
+		find . -name "*$arch*" -exec rm -rf {} \; || true
+	done
+
+	if use wayland; then
+		echo "-Dawt.toolkit.name=WLToolkit" >> bin/rider64.vmoptions
+
+		elog "Experimental wayland support has been enabled via USE flags"
+		elog "You may need to update your JBR runtime to the latest version"
+		elog "https://github.com/JetBrains/JetBrainsRuntime/releases"
+	fi
 }
 
 src_install() {
@@ -57,14 +77,14 @@ src_install() {
 	insinto "${dir}"
 	doins -r *
 	fperms 755 "${dir}"/bin/{"${MY_PN}",format,inspect,ltedit,remote-dev-server}.sh
-	fperms 755 "${dir}"/bin/fsnotifier
+	fperms 755 "${dir}"/bin/{repair,fsnotifier}
 
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
-	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
+	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,cef_server,jcef_helper,jexec,jspawnhelper}
 
 	make_wrapper "${PN}" "${dir}"/bin/"${MY_PN}".sh
 	newicon bin/"${MY_PN}".svg "${PN}".svg
-	make_desktop_entry "${PN}" "${SRC_URI_PN} ${PVR}" "${PN}" "Development;IDE;"
+	make_desktop_entry "${PN}" "${FRIENDLY_NAME} ${PVR}" "${PN}" "Development;IDE;"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 	dodir /usr/lib/sysctl.d/
