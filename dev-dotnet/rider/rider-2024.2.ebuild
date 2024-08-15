@@ -70,7 +70,7 @@ src_install() {
 	insinto "${dir}"
 	doins -r *
 
-	fperms 755 "${dir}"/bin/{repair,fsnotifier}
+	fperms 755 "${dir}"/bin/{"${PN}",repair,fsnotifier}
 	fperms 755 "${dir}"/bin/{remote-dev-server,inspect,rider,format,ltedit,jetbrains_client}.sh
 
 	fperms 755 "${dir}"/"${RESHARPER_DIR}"/linux-x64/{Rider.Backend,JetBrains.Debugger.Worker,JetBrains.ProcessEnumerator.Worker,clang-format,jb_zip_unarchiver}
@@ -84,7 +84,7 @@ src_install() {
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
 	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,cef_server,jcef_helper,jexec,jspawnhelper}
 
-	make_wrapper "${PN}" "${dir}/bin/${PN}.sh"
+	make_wrapper "${PN}" "${dir}/bin/${PN}"
 	newicon "bin/${PN}.svg" "${PN}.svg"
 	make_desktop_entry "${PN}" "Rider ${VER}" "${PN}" "Development;IDE;"
 

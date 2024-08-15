@@ -15,7 +15,7 @@ LICENSE="
 SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="bindist mirror splitdebug"
-IUSE=""
+IUSE="wayland"
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
@@ -41,18 +41,47 @@ src_unpack() {
 	rm -rf "${P}".tar.gz
 }
 
+src_prepare() {
+	default
+
+	declare -a remove_arches=(\
+		arm64 \
+		aarch64 \
+		macos \
+		windows- \
+		win- \
+	)
+
+	# Remove all unsupported ARCH
+	for arch in "${remove_arches[@]}"
+	do
+		echo "Removing files for $arch"
+		find . -name "*$arch*" -exec rm -rf {} \; || true
+	done
+
+	if use wayland; then
+		echo "-Dawt.toolkit.name=WLToolkit" >> bin/rider64.vmoptions
+
+		elog "Experimental wayland support has been enabled via USE flags"
+		elog "You may need to update your JBR runtime to the latest version"
+		elog "https://github.com/JetBrains/JetBrainsRuntime/releases"
+	fi
+}
+
 src_install() {
 	local dir="/opt/${P}"
 
 	insinto "${dir}"
 	doins -r *
+
+	fperms 755 "${dir}"/bin/"${PN}"
 	fperms 755 "${dir}"/bin/{"${PN}",format,inspect,ltedit,remote-dev-server}.sh
 	fperms 755 "${dir}"/bin/fsnotifier
 
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
 	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
 
-	make_wrapper "${PN}" "${dir}"/bin/"${PN}".sh
+	make_wrapper "${PN}" "${dir}"/bin/"${PN}"
 	newicon bin/"${PN}".svg "${PN}".svg
 	make_desktop_entry "${PN}" "${SRC_URI_PN} ${PVR}" "${PN}" "Development;IDE;"
 

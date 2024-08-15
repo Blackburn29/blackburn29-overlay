@@ -8,16 +8,14 @@ inherit desktop wrapper
 
 DESCRIPTION="A cross-platform IDE for Databases and SQL by JetBrains"
 HOMEPAGE="https://www.jetbrains.com/datagrip/"
-
 LICENSE="
 	|| ( jetbrains_business-4.0 jetbrains_individual-4.2 jetbrains_educational-4.0 jetbrains_classroom-4.2 jetbrains_opensource-4.2 )
 	Apache-1.1 Apache-2.0 BSD BSD-2 CC0-1.0 CDDL CPL-1.0 GPL-2-with-classpath-exception GPL-3 ISC LGPL-2.1 LGPL-3 MIT MPL-1.1 OFL PSF-2 trilead-ssh UoI-NCSA yFiles yourkit
 "
 SLOT="0"
-VER="$(ver_cut 1-2)"
 KEYWORDS="~amd64"
 RESTRICT="bindist mirror splitdebug"
-IUSE=""
+IUSE="wayland"
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
@@ -33,20 +31,36 @@ RDEPEND="
 	x11-libs/libXrandr
 "
 
-SIMPLE_NAME="DataGrip"
 MY_PN="${PN}"
-SRC_URI_PATH="${PN}"
-SRC_URI_PN="${PN}"
-SRC_URI="https://download.jetbrains.com/${SRC_URI_PATH}/${SRC_URI_PN}-${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://download.jetbrains.com/${PN}/${PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
 S="${WORKDIR}/DataGrip-${PV}"
 
 src_prepare() {
 	default
 
-	local remove_me=( "lib/async-profiler/aarch64/" )
+	declare -a remove_arches=(\
+		arm64 \
+		aarch64 \
+		macos \
+		windows- \
+		win- \
+	)
 
-	rm -rv "${remove_me[@]}" || die
+	# Remove all unsupported ARCH
+	for arch in "${remove_arches[@]}"
+	do
+		echo "Removing files for $arch"
+		find . -name "*$arch*" -exec rm -rf {} \; || true
+	done
+
+	if use wayland; then
+		echo "-Dawt.toolkit.name=WLToolkit" >> bin/rider64.vmoptions
+
+		elog "Experimental wayland support has been enabled via USE flags"
+		elog "You may need to update your JBR runtime to the latest version"
+		elog "https://github.com/JetBrains/JetBrainsRuntime/releases"
+	fi
 }
 
 src_install() {
@@ -54,15 +68,16 @@ src_install() {
 
 	insinto "${dir}"
 	doins -r *
-	fperms 755 "${dir}"/bin/{"${MY_PN}",format,inspect,ltedit,remote-dev-server}.sh
+	fperms 755 "${dir}"/bin/"${PN}"
+	fperms 755 "${dir}"/bin/{"${PN}",format,inspect,ltedit,remote-dev-server}.sh
 	fperms 755 "${dir}"/bin/fsnotifier
 
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
 	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
 
-	make_wrapper "${PN}" "${dir}"/bin/"${MY_PN}".sh
-	newicon bin/"${MY_PN}".svg "${PN}".svg
-	make_desktop_entry "${PN}" "${SIMPLE_NAME} ${VER}" "${PN}" "Development;IDE;"
+	make_wrapper "${PN}" "${dir}"/bin/"${PN}"
+	newicon bin/"${PN}".svg "${PN}".svg
+	make_desktop_entry "${PN}" "${PN} ${PVR}" "${PN}" "Development;IDE;"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 	dodir /usr/lib/sysctl.d/
