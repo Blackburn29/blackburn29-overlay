@@ -9,10 +9,11 @@ inherit desktop wrapper
 DESCRIPTION="A cross-platform IDE for Rust developers"
 HOMEPAGE="https://www.jetbrains.com/datagrip/"
 
-LICENSE="
-	|| ( jetbrains_business-4.0 jetbrains_individual-4.2 jetbrains_educational-4.0 jetbrains_classroom-4.2 jetbrains_opensource-4.2 )
-	Apache-1.1 Apache-2.0 BSD BSD-2 CC0-1.0 CDDL CPL-1.0 GPL-2-with-classpath-exception GPL-3 ISC LGPL-2.1 LGPL-3 MIT MPL-1.1 OFL PSF-2 trilead-ssh UoI-NCSA yFiles yourkit
-"
+LICENSE="|| ( JetBrains-business JetBrains-educational JetBrains-classroom JetBrains-individual )"
+LICENSE+=" 0BSD Apache-2.0 BSD BSD-2 CC0-1.0 CC-BY-2.5 CC-BY-3.0 CC-BY-4.0 CDDL-1.1 CPL-1.0 EPL-1.0 GPL-2"
+LICENSE+=" GPL-2-with-classpath-exception ISC JSON LGPL-2.1 LGPL-3 LGPL-3+ libpng MIT MPL-1.1 MPL-2.0"
+LICENSE+=" OFL-1.1 public-domain unicode Unlicense W3C ZLIB ZPL"
+
 SLOT="0"
 VER="$(ver_cut 1-2)"
 KEYWORDS="~amd64"
