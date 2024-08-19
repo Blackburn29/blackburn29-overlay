@@ -7,7 +7,7 @@ declare -A ides=( \
     ["DG"]="dev-util/datagrip" \
     ["WS"]="dev-util/webstorm" \
     ["RR"]="dev-util/rustrover" \
-    ["RD"]="dev-dotnet/rider" \
+    ["RD"]="dev-util/rider" \
 )
 
 for ide in "${!ides[@]}"; do
