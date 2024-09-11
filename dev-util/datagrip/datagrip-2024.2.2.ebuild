@@ -20,6 +20,7 @@ RESTRICT="bindist mirror splitdebug"
 IUSE="wayland"
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
+	sys-process/audit
 	dev-libs/libdbusmenu
 	dev-debug/lldb
 	media-libs/mesa[X(+)]
