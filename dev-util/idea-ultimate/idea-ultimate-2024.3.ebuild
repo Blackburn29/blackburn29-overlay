@@ -81,7 +81,7 @@ src_install() {
 	doins -r *
 	fperms 755 "${dir}"/bin/"${MY_PN}"
 	fperms 755 "${dir}"/bin/{"${MY_PN}",format,inspect,ltedit,remote-dev-server}.sh
-	fperms 755 "${dir}"/bin/{repair,fsnotifier}
+	fperms 755 "${dir}"/bin/{fsnotifier,remote-dev-server,restarter}
 
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
 	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,cef_server,jcef_helper,jexec,jspawnhelper}
