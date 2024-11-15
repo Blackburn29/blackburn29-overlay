@@ -71,7 +71,7 @@ src_install() {
 
 	insinto "${dir}"
 	doins -r *
-	fperms 755 "${dir}"/bin/"${PN}"
+	fperms 755 "${dir}"/bin/{"${PN}",remote-dev-server,fsnotifier,restarter}
 	fperms 755 "${dir}"/bin/{"${PN}",format,inspect,ltedit,remote-dev-server}.sh
 	fperms 755 "${dir}"/bin/fsnotifier
 
