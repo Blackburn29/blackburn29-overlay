@@ -63,7 +63,7 @@ src_prepare() {
 	done
 
 	if use wayland; then
-		echo "-Dawt.toolkit.name=WLToolkit" >> bin/rider64.vmoptions
+		echo "-Dawt.toolkit.name=WLToolkit" >> bin/rustrover64.vmoptions
 
 		elog "Experimental wayland support has been enabled via USE flags"
 		elog "You may need to update your JBR runtime to the latest version"
