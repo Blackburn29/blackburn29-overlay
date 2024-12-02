@@ -34,7 +34,7 @@ RDEPEND="
 	x11-libs/libXrandr
 "
 
-MY_PN="${PN}"
+MY_PN="DataGrip"
 SRC_URI="https://download.jetbrains.com/${PN}/${PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
 S="${WORKDIR}/DataGrip-${PV}"
@@ -58,7 +58,7 @@ src_prepare() {
 	done
 
 	if use wayland; then
-		echo "-Dawt.toolkit.name=WLToolkit" >> bin/rider64.vmoptions
+		echo "-Dawt.toolkit.name=WLToolkit" >> bin/datagrip64.vmoptions
 
 		elog "Experimental wayland support has been enabled via USE flags"
 		elog "You may need to update your JBR runtime to the latest version"
@@ -80,7 +80,7 @@ src_install() {
 
 	make_wrapper "${PN}" "${dir}"/bin/"${PN}"
 	newicon bin/"${PN}".svg "${PN}".svg
-	make_desktop_entry "${PN}" "${PN} ${PVR}" "${PN}" "Development;IDE;"
+	make_desktop_entry "${PN}" "${MY_PN} ${PVR}" "${PN}" "Development;IDE;"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 	dodir /usr/lib/sysctl.d/
