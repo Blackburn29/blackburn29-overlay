@@ -20,7 +20,7 @@ KEYWORDS="~amd64"
 IUSE="wayland"
 RDEPEND="
 	dev-libs/libdbusmenu
-	dev-debug/lldb
+	llvm-core/lldb
 	media-libs/mesa[X(+)]
 	sys-process/audit
 	x11-libs/libX11

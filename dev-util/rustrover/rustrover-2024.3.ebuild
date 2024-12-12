@@ -23,7 +23,7 @@ QA_PREBUILT="opt/${P}/*"
 RDEPEND="
 	dev-libs/libdbusmenu
 	dev-libs/glib
-	dev-debug/lldb
+	llvm-core/lldb
 	media-libs/mesa[X(+)]
 	sys-process/audit
 	x11-libs/libX11
