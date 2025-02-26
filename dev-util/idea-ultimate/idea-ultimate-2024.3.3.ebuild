@@ -88,7 +88,7 @@ src_install() {
 
 	make_wrapper "${PN}" "${dir}"/bin/"${MY_PN}"
 	newicon bin/"${MY_PN}".svg "${PN}".svg
-	make_desktop_entry "${PN}" "${FRIENDLY_NAME} ${PVR}" "${PN}" "Development;IDE;"
+	make_desktop_entry "${PN}" "${FRIENDLY_NAME} ${PVR}" "${PN}" "Development;IDE;" "StartupWMClass=jetbrains-idea"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 	dodir /usr/lib/sysctl.d/
