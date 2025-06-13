@@ -76,6 +76,9 @@ src_install() {
 	fperms 755 "${dir}"/bin/{"${PN}",fsnotifier,restarter,remote-dev-server}
 	fperms 755 "${dir}"/bin/{remote-dev-server,inspect,rider,format,ltedit,jetbrains_client}.sh
 
+	fperms 755 "${dir}"/tools/profiler/{dotmemory,dottrace}
+	fperms 755 "${dir}"/tools/profiler/{dotMemory,dotTrace}.sh
+
 	fperms 755 "${dir}"/"${RESHARPER_DIR}"/linux-x64/{Rider.Backend,JetBrains.Debugger.Worker,JetBrains.ProcessEnumerator.Worker,clang-format,jb_zip_unarchiver}
 	fperms 755 "${dir}"/"${RESHARPER_DIR}"/linux-x64/dotnet/dotnet
 
