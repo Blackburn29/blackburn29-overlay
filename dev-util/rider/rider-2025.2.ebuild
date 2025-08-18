@@ -82,7 +82,7 @@ src_install() {
 	fperms 755 "${dir}"/"${RESHARPER_DIR}"/linux-x64/{Rider.Backend,JetBrains.Debugger.Worker,JetBrains.ProcessEnumerator.Worker,clang-format,jb_zip_unarchiver}
 	fperms 755 "${dir}"/"${RESHARPER_DIR}"/linux-x64/dotnet/dotnet
 
-	fperms 755 "${dir}"/"${PLUGIN_DIR}"/cidr-debugger-plugin/bin/lldb/linux/x64/bin/{lldb,lldb-server,lldb-argdumper,LLDBFrontend}
+	fperms 755 "${dir}"/"${PLUGIN_DIR}"/cidr-debugger/bin/lldb/linux/x64/bin/{lldb,lldb-server,lldb-argdumper,LLDBFrontend}
 	fperms 755 "${dir}"/"${PLUGIN_DIR}"/dotCommon/DotFiles/linux-x64/JetBrains.Profiler.PdbServer
 	fperms 755 "${dir}"/"${PLUGIN_DIR}"/remote-dev-server/selfcontained/bin/{xkbcomp,Xvfb}
 	fperms 755 "${dir}"/"${PLUGIN_DIR}"/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-linux-amd64
