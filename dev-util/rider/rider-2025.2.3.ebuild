@@ -91,7 +91,7 @@ src_install() {
 	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,cef_server,jcef_helper,jexec,jspawnhelper}
 
 	make_wrapper "${PN}" "${dir}/bin/${PN}"
-	newicon "bin/${PN}.svg" "${PN}.svg"
+	doicon -s scalable bin/"${PN}".svg
 	make_desktop_entry "${PN}" "Rider ${VER}" "${PN}" "Development;IDE;"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
