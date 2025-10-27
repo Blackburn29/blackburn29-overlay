@@ -92,6 +92,7 @@ src_install() {
 
 	make_wrapper "${PN}" "${dir}/bin/${PN}"
 	doicon -s scalable bin/"${PN}".svg
+	doicon -s 128 bin/"${PN}".png
 	make_desktop_entry "${PN}" "Rider ${VER}" "${PN}" "Development;IDE;"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
