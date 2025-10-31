@@ -96,9 +96,12 @@ src_install() {
 	fperms 755 "${dir}"/plugins/remote-dev-server/{bin/launcher.sh,selfcontained/bin/xkbcomp,selfcontained/bin/Xvfb}
 	fperms 755 "${dir}"/plugins/tailwindcss/server/tailwindcss-language-server
 
-
 	make_wrapper "${PN}" "${dir}"/bin/"${PN}"
+
 	doicon -s scalable bin/"${PN}".svg
+	doicon -s 128 bin/"${PN}".png
+	newicon bin/"${MY_PN}".svg "${PN}".svg
+
 	make_desktop_entry "${PN}" "${SRC_URI_PN} ${PVR}" "${PN}" "Development;IDE;"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
