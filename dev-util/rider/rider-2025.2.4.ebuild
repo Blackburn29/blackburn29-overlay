@@ -94,7 +94,7 @@ src_install() {
 
 	doicon -s scalable bin/"${PN}".svg
 	doicon -s 128 bin/"${PN}".png
-	newicon bin/"${MY_PN}".svg "${PN}".svg
+	newicon bin/"${PN}".svg "${PN}".svg
 
 	make_desktop_entry "${PN}" "Rider ${VER}" "${PN}" "Development;IDE;"
 
