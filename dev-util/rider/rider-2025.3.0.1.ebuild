@@ -1,4 +1,4 @@
-# Copyright 2024 Blake LaFleur <blake.k.lafleur@gmail.com>
+# Copyright 2025 Blake LaFleur <blake.k.lafleur@gmail.com>
 # Distributed under the terms of the GNU General Public License as published by the Free Software Foundation;
 # either version 2 of the License, or (at your option) any later version.
 
@@ -36,6 +36,7 @@ RDEPEND="
 S="${WORKDIR}/JetBrains Rider-${PV}"
 
 QA_PREBUILT="opt/${P}/*"
+QA_SONAME="opt/${P}/*"
 
 RESHARPER_DIR="lib/ReSharperHost"
 PLUGIN_DIR="plugins"
