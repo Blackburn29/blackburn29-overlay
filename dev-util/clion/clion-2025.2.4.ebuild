@@ -81,7 +81,7 @@ src_install() {
 	fperms 755 "${dir}"/bin/{"${PN}",format,inspect,ltedit,remote-dev-server}.sh
 	fperms 755 "${dir}"/bin/fsnotifier
 
-	fperms 755 "${dir}"/bin/clang/linux/x64/bin/{clangd,clang-format,clang-tidy,clazy-standalone,llvm-symbolizer}
+	fperms 755 "${dir}"/bin/clang/linux/x64/bin/{clangd,clang-tidy,clazy-standalone,llvm-symbolizer}
 	fperms 755 "${dir}"/bin/cmake/linux/x64/bin/{cmake,cpack,ctest}
 	fperms 755 "${dir}"/bin/gdb/linux/x64/bin/{gcore,gdb,gdb-add-index,gdbserver}
 	fperms 755 "${dir}"/bin/lldb/linux/x64/bin/{lldb,lldb-argdumper,LLDBFrontend,lldb-server}
@@ -100,7 +100,7 @@ src_install() {
 
 	doicon -s scalable bin/"${PN}".svg
 	doicon -s 128 bin/"${PN}".png
-	newicon bin/"${MY_PN}".svg "${PN}".svg
+	newicon bin/"${PN}".svg "${PN}".svg
 
 	make_desktop_entry "${PN}" "${SRC_URI_PN} ${PVR}" "${PN}" "Development;IDE;"
 
