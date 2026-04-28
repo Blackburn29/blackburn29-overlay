@@ -1,4 +1,4 @@
-# Copyright 2024 Blake LaFleur <blake.k.lafleur@gmail.com>
+# Copyright 2026 Blake LaFleur <blake.k.lafleur@gmail.com>
 # Distributed under the terms of the GNU General Public License as published by the Free Software Foundation;
 # either version 2 of the License, or (at your option) any later version.
 
@@ -78,19 +78,18 @@ src_install() {
 	doins -r *
 	fperms 755 "${dir}"/bin/{"${MY_PN}",remote-dev-server,jetbrains_client,ltedit,inspect,format}.sh
 	fperms 755 "${dir}"/bin/lldb/linux/x64/lib/xml2Conf.sh
-	fperms 755 "${dir}"/bin/{fsnotifier,repair}
+	fperms 755 "${dir}"/bin/{fsnotifier,restarter}
 	fperms 755 "${dir}"/bin/lldb/linux/x64/bin/{LLDBFrontend,lldb-argdumper,lldb-server,lldb}
 
-	fperms 755 "${dir}"/plugins/intellij-rust/bin/linux/x86-64/intellij-rust-native-helper
 	fperms 755 "${dir}"/plugins/remote-dev-server/selfcontained/bin/{xkbcomp,Xvfb}
 	fperms 755 "${dir}"/plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-linux-amd64
 
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
 	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper,cef_server}
 
-
 	make_wrapper "${PN}" "${dir}"/bin/"${MY_PN}".sh
-	doicon -s scalable bin/"${PN}".svg
+
+	newicon bin/"${PN}".svg "${PN}".svg
 	make_desktop_entry "${PN}" "${SIMPLE_NAME} ${VER}" "${PN}" "Development;IDE;"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit

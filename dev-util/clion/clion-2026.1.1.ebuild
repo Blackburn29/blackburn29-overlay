@@ -1,4 +1,4 @@
-# Copyright 2023 Blake LaFleur <blake.k.lafleur@gmail.com>
+# Copyright 2026 Blake LaFleur <blake.k.lafleur@gmail.com>
 # Distributed under the terms of the GNU General Public License as published by the Free Software Foundation;
 # either version 2 of the License, or (at your option) any later version.
 
@@ -6,8 +6,8 @@ EAPI=8
 
 inherit desktop wrapper
 
-DESCRIPTION="A cross-platform IDE for Databases and SQL by JetBrains"
-HOMEPAGE="https://www.jetbrains.com/datagrip/"
+DESCRIPTION="A cross-platform IDE for C and C++"
+HOMEPAGE="https://www.jetbrains.com/clion/"
 
 LICENSE="|| ( JetBrains-business JetBrains-educational JetBrains-classroom JetBrains-individual )"
 LICENSE+=" 0BSD Apache-2.0 BSD BSD-2 CC0-1.0 CC-BY-2.5 CC-BY-3.0 CC-BY-4.0 CDDL-1.1 CPL-1.0 EPL-1.0 GPL-2"
@@ -20,9 +20,9 @@ RESTRICT="bindist mirror splitdebug"
 IUSE="wayland"
 QA_PREBUILT="opt/${P}/*"
 RDEPEND="
-	sys-process/audit
 	dev-libs/libdbusmenu
 	llvm-core/lldb
+	sys-process/audit
 	media-libs/mesa[X(+)]
 	x11-libs/libX11
 	x11-libs/libXcomposite
@@ -34,10 +34,15 @@ RDEPEND="
 	x11-libs/libXrandr
 "
 
-MY_PN="DataGrip"
-SRC_URI="https://download.jetbrains.com/${PN}/${PN}-${PV}.tar.gz -> ${P}.tar.gz"
+SRC_URI_PN="CLion"
+SRC_URI="https://download-cdn.jetbrains.com/cpp/${SRC_URI_PN}-${PV}.tar.gz -> ${P}.tar.gz"
 
-S="${WORKDIR}/DataGrip-${PV}"
+src_unpack() {
+	cp "${DISTDIR}"/${P}.tar.gz "${WORKDIR}" || die
+	mkdir -p "${P}"
+	tar xf "${P}".tar.gz --strip-components=1 -C ./"${P}"
+	rm -rf "${P}".tar.gz
+}
 
 src_prepare() {
 	default
@@ -58,7 +63,7 @@ src_prepare() {
 	done
 
 	if use wayland; then
-		echo "-Dawt.toolkit.name=WLToolkit" >> bin/datagrip64.vmoptions
+		echo "-Dawt.toolkit.name=WLToolkit" >> bin/clion64.vmoptions
 
 		elog "Experimental wayland support has been enabled via USE flags"
 		elog "You may need to update your JBR runtime to the latest version"
@@ -71,16 +76,30 @@ src_install() {
 
 	insinto "${dir}"
 	doins -r *
-	fperms 755 "${dir}"/bin/{"${PN}",remote-dev-server,fsnotifier,restarter}
+
+	fperms 755 "${dir}"/bin/{"${PN}",restarter,clion}
 	fperms 755 "${dir}"/bin/{"${PN}",format,inspect,ltedit,remote-dev-server}.sh
 	fperms 755 "${dir}"/bin/fsnotifier
+
+	fperms 755 "${dir}"/bin/clang/linux/x64/bin/{clangd,clang-tidy,clazy-standalone,llvm-symbolizer}
+	fperms 755 "${dir}"/bin/cmake/linux/x64/bin/{cmake,cpack,ctest}
+	fperms 755 "${dir}"/bin/gdb/linux/x64/bin/{gcore,gdb,gdb-add-index,gdbserver}
+	fperms 755 "${dir}"/bin/lldb/linux/x64/bin/{lldb,lldb-argdumper,LLDBFrontend,lldb-server}
+	fperms 755 "${dir}"/bin/ninja/linux/x64/ninja
 
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
 	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
 
+	fperms 755 "${dir}"/plugins/clion-radler/DotFiles/linux-x64/Rider.Backend
+	fperms 755 "${dir}"/plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-linux-amd64
+	fperms 755 "${dir}"/plugins/python-ce/helpers/{pockets/autolog.py,pycodestyle-2.10.0.py,pycodestyle.py,pydev/pydevd_attach_to_process/linux_and_mac/compile_linux.sh}
+	fperms 755 "${dir}"/plugins/remote-dev-server/{bin/launcher.sh,selfcontained/bin/xkbcomp,selfcontained/bin/Xvfb}
+	fperms 755 "${dir}"/plugins/tailwindcss/server/bin/tailwindcss-language-server
+
 	make_wrapper "${PN}" "${dir}"/bin/"${PN}"
-	doicon -s scalable bin/"${PN}".svg
-	make_desktop_entry "${PN}" "${MY_PN} ${PVR}" "${PN}" "Development;IDE;"
+
+	newicon bin/"${PN}".svg "${PN}".svg
+	make_desktop_entry "${PN}" "${SRC_URI_PN} ${PVR}" "${PN}" "Development;IDE;"
 
 	# recommended by: https://confluence.jetbrains.com/display/IDEADEV/Inotify+Watches+Limit
 	dodir /usr/lib/sysctl.d/
