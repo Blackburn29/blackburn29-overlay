@@ -88,7 +88,7 @@ src_install() {
 	fperms 755 "${dir}"/bin/ninja/linux/x64/ninja
 
 	fperms 755 "${dir}"/jbr/bin/{java,javac,javadoc,jcmd,jdb,jfr,jhsdb,jinfo,jmap,jps,jrunscript,jstack,jstat,keytool,rmiregistry,serialver}
-	fperms 755 "${dir}"/jbr/lib/{chrome-sandbox,jcef_helper,jexec,jspawnhelper}
+	fperms 755 "${dir}"/jbr/lib/{jexec,jspawnhelper}
 
 	fperms 755 "${dir}"/plugins/clion-radler/DotFiles/linux-x64/Rider.Backend
 	fperms 755 "${dir}"/plugins/gateway-plugin/lib/remote-dev-workers/remote-dev-worker-linux-amd64
